@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* 主色调 */
+  --primary: #007AFF;
+  --primary-dark: #0056B3;
+  --primary-light: #E5F1FF;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* 中性色调 */
+  --background: #ffffff;
+  --foreground: #1D1D1F;
+  --secondary: #86868B;
+
+  /* 系统颜色 */
+  --success: #34C759;
+  --warning: #FF9500;
+  --error: #FF3B30;
+
+  /* 背景色 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #F5F5F7;
+  --bg-tertiary: #E5E5EA;
+
+  /* 文字颜色 */
+  --text-primary: #1D1D1F;
+  --text-secondary: #86868B;
+  --text-tertiary: #98989F;
+
+  /* 边框颜色 */
+  --border-light: #D2D2D7;
+  --border-dark: #86868B;
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+
+  /* 字体 */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: SF Mono, SFMono-Regular, ui-monospace, DejaVu Sans Mono, Menlo, Consolas, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #F5F5F7;
+    --secondary: #86868B;
+
+    --bg-primary: #000000;
+    --bg-secondary: #1C1C1E;
+    --bg-tertiary: #2C2C2E;
+
+    --text-primary: #F5F5F7;
+    --text-secondary: #86868B;
+    --text-tertiary: #98989F;
+
+    --border-light: #2C2C2E;
+    --border-dark: #3A3A3C;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* 玻璃拟态效果 */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 卡片样式 */
+.card {
+  background: var(--bg-primary);
+  border-radius: 1rem;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* 按钮样式 */
+.btn {
+  @apply px-4 py-2 rounded-full font-medium transition-all duration-200;
+}
+
+.btn-primary {
+  @apply bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300;
+}
+
+/* 输入框样式 */
+.input {
+  @apply w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200;
+}
+
+/* 滚动条样式 */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* 渐变背景 */
+.gradient-bg {
+  background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+}
+
+/* 毛玻璃效果 */
+.blur-bg {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.dark .blur-bg {
+  background: rgba(0, 0, 0, 0.8);
 }

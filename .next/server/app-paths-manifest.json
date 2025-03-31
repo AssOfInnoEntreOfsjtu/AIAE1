@@ -1,0 +1,13 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/user/profile/route": "app/api/user/profile/route.js",
+  "/projects/page": "app/projects/page.js",
+  "/discussion/[id]/page": "app/discussion/[id]/page.js",
+  "/discussion/page": "app/discussion/page.js",
+  "/page": "app/page.js",
+  "/investors/page": "app/investors/page.js",
+  "/profile/page": "app/profile/page.js",
+  "/talents/page": "app/talents/page.js",
+  "/info/page": "app/info/page.js",
+  "/lab/page": "app/lab/page.js"
+}
