@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Image from 'next/image';
 import { User } from '@/types/user';
 
@@ -15,7 +16,8 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
           <Image
             src={user.avatar || '/default-avatar.png'}
             alt={user.name}
-            fill
+            width={200}
+            height={200}
             className="rounded-full object-cover"
           />
         </div>

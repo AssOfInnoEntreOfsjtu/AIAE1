@@ -1,5 +1,7 @@
 'use client';
 import React from 'react';
+import type { JSX } from 'react';
+
 interface Activity {
   id: string;
   type: 'message' | 'interaction' | 'announcement';

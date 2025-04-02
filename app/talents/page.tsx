@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import type { JSX } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TalentCard from '../components/TalentCard';
 
@@ -11,7 +12,28 @@ const talents = [
     name: '张明',
     title: 'AI算法专家',
     avatar: '/images/avatar1.jpg',
-    skills: ['机器学习', '深度学习', '计算机视觉'],
+    // 技术栈标签
+    techStack: {
+      languages: ['Python', 'C++', 'JavaScript'],
+      frameworks: ['PyTorch', 'TensorFlow', 'OpenCV'],
+      tools: ['Docker', 'Git', 'Linux'],
+      databases: ['MongoDB', 'PostgreSQL'],
+      cloud: ['AWS', 'GCP', 'Azure']
+    },
+    // 项目经验标签
+    projectExperience: {
+      domains: ['计算机视觉', '自动驾驶', '医疗影像'],
+      roles: ['算法工程师', '技术负责人'],
+      scale: ['大型企业', '创业公司'],
+      duration: ['1-2年', '2-5年']
+    },
+    // 行业偏好标签
+    industryPreferences: {
+      sectors: ['AI', '医疗科技', '自动驾驶'],
+      stages: ['初创期', '成长期'],
+      teamSize: ['3-5人', '5-10人'],
+      workStyle: ['远程办公', '混合办公']
+    },
     experience: '5年',
     education: '清华大学计算机系博士',
     interests: ['AI创业', '技术咨询', '团队管理'],
@@ -23,8 +45,6 @@ const talents = [
     availability: '可加入新项目',
     teamSize: '3-5人',
     preferredRoles: ['技术负责人', '算法工程师'],
-    languages: ['Python', 'C++', 'JavaScript'],
-    tools: ['PyTorch', 'TensorFlow', 'Docker'],
     awards: ['ACM程序设计大赛金奖', '国家奖学金'],
     certificates: ['AWS认证解决方案架构师', 'Google TensorFlow开发者认证'],
   },
@@ -33,7 +53,28 @@ const talents = [
     name: '李华',
     title: '全栈开发工程师',
     avatar: '/images/avatar2.jpg',
-    skills: ['Python', 'React', 'Node.js', 'TensorFlow'],
+    // 技术栈标签
+    techStack: {
+      languages: ['JavaScript', 'Python', 'Java'],
+      frameworks: ['React', 'Node.js', 'Express'],
+      tools: ['Git', 'Docker', 'VS Code'],
+      databases: ['MongoDB', 'MySQL', 'Redis'],
+      cloud: ['AWS', 'Heroku']
+    },
+    // 项目经验标签
+    projectExperience: {
+      domains: ['Web应用', 'AI应用', '数据分析'],
+      roles: ['全栈工程师', '技术负责人'],
+      scale: ['创业公司', '中型企业'],
+      duration: ['1-2年', '2-3年']
+    },
+    // 行业偏好标签
+    industryPreferences: {
+      sectors: ['互联网', 'AI', '金融科技'],
+      stages: ['初创期', '种子期'],
+      teamSize: ['2-4人', '4-8人'],
+      workStyle: ['远程办公', '办公室办公']
+    },
     experience: '3年',
     education: '北京大学软件工程硕士',
     interests: ['AI应用开发', '产品设计', '技术创业'],
@@ -45,8 +86,6 @@ const talents = [
     availability: '寻找创业伙伴',
     teamSize: '2-4人',
     preferredRoles: ['全栈工程师', '产品经理'],
-    languages: ['JavaScript', 'Python', 'Java'],
-    tools: ['React', 'Node.js', 'MongoDB'],
     awards: ['互联网+创新创业大赛银奖'],
     certificates: ['MongoDB认证开发者'],
   },
@@ -55,7 +94,28 @@ const talents = [
     name: '王芳',
     title: '产品经理',
     avatar: '/images/avatar3.jpg',
-    skills: ['产品规划', '用户研究', '数据分析'],
+    // 技术栈标签
+    techStack: {
+      languages: ['中文', '英语'],
+      frameworks: ['敏捷开发', '精益创业'],
+      tools: ['Figma', 'Axure', 'JIRA'],
+      databases: ['数据分析工具'],
+      cloud: ['产品分析平台']
+    },
+    // 项目经验标签
+    projectExperience: {
+      domains: ['智能家居', '健康科技', '移动应用'],
+      roles: ['产品经理', '产品运营'],
+      scale: ['大型企业', '中型企业'],
+      duration: ['2-3年', '3-5年']
+    },
+    // 行业偏好标签
+    industryPreferences: {
+      sectors: ['智能硬件', '医疗健康', '消费科技'],
+      stages: ['成长期', '成熟期'],
+      teamSize: ['4-6人', '6-10人'],
+      workStyle: ['办公室办公', '混合办公']
+    },
     experience: '4年',
     education: '浙江大学计算机系硕士',
     interests: ['AI产品', '用户体验', '产品运营'],
@@ -67,26 +127,33 @@ const talents = [
     availability: '可加入新项目',
     teamSize: '4-6人',
     preferredRoles: ['产品经理', '产品运营'],
-    languages: ['中文', '英语'],
-    tools: ['Figma', 'Axure', '数据分析工具'],
     awards: ['产品设计大赛金奖'],
     certificates: ['PMP项目管理认证'],
   },
 ];
 
-// 筛选选项
-const skillOptions = [
-  '全部',
-  '机器学习',
-  '深度学习',
-  '计算机视觉',
-  'Python',
-  'React',
-  'Node.js',
-  '产品规划',
-  '用户研究',
-  '数据分析',
-];
+// 筛选选项更新
+const skillOptions = {
+  techStack: {
+    languages: ['全部', 'Python', 'JavaScript', 'Java', 'C++', '中文', '英语'],
+    frameworks: ['全部', 'React', 'Node.js', 'PyTorch', 'TensorFlow', '敏捷开发'],
+    tools: ['全部', 'Docker', 'Git', 'Figma', 'Axure', '数据分析工具'],
+    databases: ['全部', 'MongoDB', 'MySQL', 'Redis', 'PostgreSQL'],
+    cloud: ['全部', 'AWS', 'GCP', 'Azure', 'Heroku']
+  },
+  projectExperience: {
+    domains: ['全部', '计算机视觉', '自动驾驶', '医疗影像', 'Web应用', 'AI应用', '数据分析', '智能家居', '健康科技', '移动应用'],
+    roles: ['全部', '算法工程师', '全栈工程师', '产品经理', '技术负责人', '产品运营'],
+    scale: ['全部', '大型企业', '中型企业', '创业公司'],
+    duration: ['全部', '1-2年', '2-3年', '2-5年', '3-5年']
+  },
+  industryPreferences: {
+    sectors: ['全部', 'AI', '医疗科技', '自动驾驶', '互联网', '金融科技', '智能硬件', '医疗健康', '消费科技'],
+    stages: ['全部', '初创期', '种子期', '成长期', '成熟期'],
+    teamSize: ['全部', '2-4人', '3-5人', '4-6人', '4-8人', '5-10人', '6-10人'],
+    workStyle: ['全部', '远程办公', '办公室办公', '混合办公']
+  }
+};
 
 const roleOptions = [
   '全部',
@@ -129,19 +196,67 @@ export default function TalentsPage() {
   const [selectedLocation, setSelectedLocation] = useState('全部');
   const [selectedTalent, setSelectedTalent] = useState<typeof talents[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+  const [joinForm, setJoinForm] = useState({
+    name: '',
+    title: '',
+    education: '',
+    location: '',
+    status: '已工作',
+    availability: '可加入新项目',
+    techStack: {
+      languages: [] as string[],
+      frameworks: [] as string[],
+      tools: [] as string[],
+      databases: [] as string[],
+      cloud: [] as string[]
+    },
+    projects: ['', '']
+  });
 
   const handleTalentClick = (talent: typeof talents[0]) => {
     setSelectedTalent(talent);
     setIsModalOpen(true);
   };
 
+  const handleJoinSubmit = () => {
+    // TODO: 处理表单提交，将新人才添加到人才库
+    console.log('提交表单:', joinForm);
+    setIsJoinModalOpen(false);
+    // 重置表单
+    setJoinForm({
+      name: '',
+      title: '',
+      education: '',
+      location: '',
+      status: '已工作',
+      availability: '可加入新项目',
+      techStack: {
+        languages: [],
+        frameworks: [],
+        tools: [],
+        databases: [],
+        cloud: []
+      },
+      projects: ['', '']
+    });
+  };
+
   const filteredTalents = talents.filter(talent => {
     const matchesSearch =
       talent.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       talent.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      talent.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()));
+      talent.techStack.languages.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      talent.techStack.frameworks.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      talent.techStack.tools.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      talent.techStack.databases.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      talent.techStack.cloud.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    const matchesSkill = selectedSkill === '全部' || talent.skills.includes(selectedSkill);
+    const matchesSkill = selectedSkill === '全部' || talent.techStack.languages.includes(selectedSkill) ||
+      talent.techStack.frameworks.includes(selectedSkill) ||
+      talent.techStack.tools.includes(selectedSkill) ||
+      talent.techStack.databases.includes(selectedSkill) ||
+      talent.techStack.cloud.includes(selectedSkill);
     const matchesRole = selectedRole === '全部' || talent.preferredRoles.includes(selectedRole);
     const matchesEducation = selectedEducation === '全部' || talent.education.includes(selectedEducation);
     const matchesAvailability = selectedAvailability === '全部' || talent.availability === selectedAvailability;
@@ -208,13 +323,13 @@ export default function TalentsPage() {
           </div>
 
           {/* 筛选选项 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-4">
-                技能筛选
+                技术栈
               </label>
               <div className="flex flex-wrap gap-3">
-                {skillOptions.map((skill) => (
+                {skillOptions.techStack.languages.map((skill) => (
                   <button
                     key={skill}
                     onClick={() => setSelectedSkill(skill)}
@@ -224,6 +339,44 @@ export default function TalentsPage() {
                       }`}
                   >
                     {skill}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-4">
+                项目经验
+              </label>
+              <div className="flex flex-wrap gap-3">
+                {skillOptions.projectExperience.domains.map((domain) => (
+                  <button
+                    key={domain}
+                    onClick={() => setSelectedSkill(domain)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedSkill === domain
+                      ? 'bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white shadow-lg shadow-blue-500/25'
+                      : 'bg-slate-700/30 text-slate-300 hover:bg-slate-700/50 hover:text-white'
+                      }`}
+                  >
+                    {domain}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-4">
+                行业偏好
+              </label>
+              <div className="flex flex-wrap gap-3">
+                {skillOptions.industryPreferences.sectors.map((sector) => (
+                  <button
+                    key={sector}
+                    onClick={() => setSelectedSkill(sector)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedSkill === sector
+                      ? 'bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white shadow-lg shadow-blue-500/25'
+                      : 'bg-slate-700/30 text-slate-300 hover:bg-slate-700/50 hover:text-white'
+                      }`}
+                  >
+                    {sector}
                   </button>
                 ))}
               </div>
@@ -285,33 +438,52 @@ export default function TalentsPage() {
                 ))}
               </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-4">
-                所在地
-              </label>
-              <div className="flex flex-wrap gap-3">
-                {locationOptions.map((location) => (
-                  <button
-                    key={location}
-                    onClick={() => setSelectedLocation(location)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedLocation === location
-                      ? 'bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white shadow-lg shadow-blue-500/25'
-                      : 'bg-slate-700/30 text-slate-300 hover:bg-slate-700/50 hover:text-white'
-                      }`}
-                  >
-                    {location}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
+        </motion.div>
 
-          {/* 人才展示区 */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
+        {/* 人才展示区 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-slate-800/40 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-slate-700/30"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* 加入人才库卡片 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              onClick={() => setIsJoinModalOpen(true)}
+              className="cursor-pointer group h-full"
+            >
+              <div className="bg-slate-800/40 backdrop-blur-xl rounded-3xl shadow-xl overflow-hidden border-2 border-dashed border-slate-600/30 hover:border-blue-500/50 transition-all duration-300 h-full flex flex-col items-center justify-center p-8 relative">
+                {/* 背景动画效果 */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* 加号图标 */}
+                <div className="w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center mb-4 relative group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-8 h-8 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                </div>
+
+                {/* 文字内容 */}
+                <div className="relative text-center">
+                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-300 transition-colors duration-300">
+                    加入人才库
+                  </h3>
+                  <p className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
+                    展示你的技能，寻找理想团队
+                  </p>
+                </div>
+
+                {/* 点击提示 */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="text-xs text-slate-400">点击加入 →</span>
+                </div>
+              </div>
+            </motion.div>
+
             {filteredTalents.map((talent, index) => (
               <motion.div
                 key={talent.id}
@@ -319,14 +491,14 @@ export default function TalentsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 onClick={() => handleTalentClick(talent)}
-                className="cursor-pointer group"
+                className="cursor-pointer group h-full"
               >
-                <div className="bg-slate-800/40 backdrop-blur-xl rounded-3xl shadow-xl overflow-hidden border border-slate-700/30 hover:border-blue-500/50 transition-all duration-300">
-                  <TalentCard {...talent} />
+                <div className="bg-slate-800/40 backdrop-blur-xl rounded-3xl shadow-xl overflow-hidden border border-slate-700/30 hover:border-blue-500/50 transition-all duration-300 h-full">
+                  <TalentCard {...talent} status="已工作" />
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
 
           {/* 空状态提示 */}
           {filteredTalents.length === 0 && (
@@ -336,6 +508,190 @@ export default function TalentsPage() {
           )}
         </motion.div>
       </div>
+
+      {/* 加入人才库模态框 */}
+      <AnimatePresence>
+        {isJoinModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              onClick={() => setIsJoinModalOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative bg-slate-800/90 backdrop-blur-xl rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="p-8">
+                <div className="flex justify-between items-start mb-8">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white mb-2">加入人才库</h2>
+                    <p className="text-slate-300">填写你的信息，展示你的技能</p>
+                  </div>
+                  <button
+                    onClick={() => setIsJoinModalOpen(false)}
+                    className="text-slate-400 hover:text-white transition-colors"
+                  >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                <form onSubmit={(e) => { e.preventDefault(); handleJoinSubmit(); }} className="space-y-6">
+                  {/* 基本信息 */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">姓名</label>
+                      <input
+                        type="text"
+                        value={joinForm.name}
+                        onChange={(e) => setJoinForm({ ...joinForm, name: e.target.value })}
+                        className="w-full px-4 py-2 rounded-lg bg-slate-700/30 border border-slate-600/30 text-white placeholder-slate-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/25 transition-all duration-300"
+                        placeholder="请输入你的姓名"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">职位</label>
+                      <input
+                        type="text"
+                        value={joinForm.title}
+                        onChange={(e) => setJoinForm({ ...joinForm, title: e.target.value })}
+                        className="w-full px-4 py-2 rounded-lg bg-slate-700/30 border border-slate-600/30 text-white placeholder-slate-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/25 transition-all duration-300"
+                        placeholder="请输入你的职位"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* 教育背景和所在地 */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">教育背景</label>
+                      <input
+                        type="text"
+                        value={joinForm.education}
+                        onChange={(e) => setJoinForm({ ...joinForm, education: e.target.value })}
+                        className="w-full px-4 py-2 rounded-lg bg-slate-700/30 border border-slate-600/30 text-white placeholder-slate-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/25 transition-all duration-300"
+                        placeholder="例如：清华大学计算机系硕士"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">所在地</label>
+                      <input
+                        type="text"
+                        value={joinForm.location}
+                        onChange={(e) => setJoinForm({ ...joinForm, location: e.target.value })}
+                        className="w-full px-4 py-2 rounded-lg bg-slate-700/30 border border-slate-600/30 text-white placeholder-slate-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/25 transition-all duration-300"
+                        placeholder="例如：北京"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* 当前状态和可加入状态 */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">当前状态</label>
+                      <select
+                        value={joinForm.status}
+                        onChange={(e) => setJoinForm({ ...joinForm, status: e.target.value })}
+                        className="w-full px-4 py-2 rounded-lg bg-slate-700/30 border border-slate-600/30 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/25 transition-all duration-300"
+                      >
+                        <option value="已工作">已工作</option>
+                        <option value="学生">学生</option>
+                        <option value="已毕业">已毕业</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">可加入状态</label>
+                      <select
+                        value={joinForm.availability}
+                        onChange={(e) => setJoinForm({ ...joinForm, availability: e.target.value })}
+                        className="w-full px-4 py-2 rounded-lg bg-slate-700/30 border border-slate-600/30 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/25 transition-all duration-300"
+                      >
+                        <option value="可加入新项目">可加入新项目</option>
+                        <option value="寻找创业伙伴">寻找创业伙伴</option>
+                        <option value="兼职合作">兼职合作</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* 技术栈 */}
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">技术栈</label>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">编程语言</label>
+                        <input
+                          type="text"
+                          value={joinForm.techStack.languages.join(', ')}
+                          onChange={(e) => setJoinForm({
+                            ...joinForm,
+                            techStack: { ...joinForm.techStack, languages: e.target.value.split(',').map(s => s.trim()) }
+                          })}
+                          className="w-full px-4 py-2 rounded-lg bg-slate-700/30 border border-slate-600/30 text-white placeholder-slate-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/25 transition-all duration-300"
+                          placeholder="例如：Python, JavaScript, Java"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">框架</label>
+                        <input
+                          type="text"
+                          value={joinForm.techStack.frameworks.join(', ')}
+                          onChange={(e) => setJoinForm({
+                            ...joinForm,
+                            techStack: { ...joinForm.techStack, frameworks: e.target.value.split(',').map(s => s.trim()) }
+                          })}
+                          className="w-full px-4 py-2 rounded-lg bg-slate-700/30 border border-slate-600/30 text-white placeholder-slate-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/25 transition-all duration-300"
+                          placeholder="例如：React, Node.js, PyTorch"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 最近项目 */}
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">最近项目</label>
+                    <div className="space-y-4">
+                      {joinForm.projects.map((project, index) => (
+                        <input
+                          key={index}
+                          type="text"
+                          value={project}
+                          onChange={(e) => {
+                            const newProjects = [...joinForm.projects];
+                            newProjects[index] = e.target.value;
+                            setJoinForm({ ...joinForm, projects: newProjects });
+                          }}
+                          className="w-full px-4 py-2 rounded-lg bg-slate-700/30 border border-slate-600/30 text-white placeholder-slate-400 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/25 transition-all duration-300"
+                          placeholder={`项目 ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 提交按钮 */}
+                  <div className="flex justify-end pt-6">
+                    <button
+                      type="submit"
+                      className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300"
+                    >
+                      确认加入
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* 人才详情模态框 */}
       <AnimatePresence>
@@ -399,7 +755,7 @@ export default function TalentsPage() {
                   <div>
                     <h3 className="text-lg font-semibold text-white mb-4">技能专长</h3>
                     <div className="flex flex-wrap gap-2">
-                      {selectedTalent.skills.map((skill) => (
+                      {selectedTalent.techStack.languages.map((skill) => (
                         <span
                           key={skill}
                           className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm"
@@ -413,15 +769,29 @@ export default function TalentsPage() {
                   <div>
                     <h3 className="text-lg font-semibold text-white mb-4">项目经验</h3>
                     <ul className="space-y-2">
-                      {selectedTalent.projects.map((project) => (
-                        <li key={project} className="text-slate-300 flex items-start">
+                      {selectedTalent.projectExperience.domains.map((domain) => (
+                        <li key={domain} className="text-slate-300 flex items-start">
                           <svg className="w-5 h-5 mr-2 text-blue-400 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                           </svg>
-                          {project}
+                          {domain}
                         </li>
                       ))}
                     </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-4">行业偏好</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedTalent.industryPreferences.sectors.map((sector) => (
+                        <span
+                          key={sector}
+                          className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm"
+                        >
+                          {sector}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
                   <div>

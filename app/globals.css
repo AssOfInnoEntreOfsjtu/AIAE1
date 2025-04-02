@@ -1,4 +1,62 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+/* 添加平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 优化滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
 :root {
   /* 主色调 */
@@ -101,32 +159,45 @@ body {
 .card {
   background: var(--bg-primary);
   border-radius: 1rem;
-  border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
   transition: all 0.3s ease;
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
 }
 
 /* 按钮样式 */
 .btn {
-  @apply px-4 py-2 rounded-full font-medium transition-all duration-200;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .btn-primary {
-  @apply bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700;
+  background: var(--primary);
+  color: white;
 }
 
 .btn-secondary {
-  @apply bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 /* 输入框样式 */
 .input {
-  @apply w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-light);
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 /* 滚动条样式 */
@@ -141,14 +212,14 @@ body {
 
 /* 渐变背景 */
 .gradient-bg {
-  background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg-primary) 100%);
 }
 
-/* 毛玻璃效果 */
+/* 模糊背景 */
 .blur-bg {
   background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .dark .blur-bg {

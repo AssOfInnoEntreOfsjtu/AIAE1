@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Layout from "./components/Layout";
-
-// 导入 Inter 字体，并指定只使用拉丁语子集
-const inter = Inter({ subsets: ["latin"] });
 
 // 定义应用程序的元数据，包括标题和描述
 export const metadata: Metadata = {
@@ -20,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh">
-      <body className={inter.className}>
+      <body className="font-sans">
         <Layout>{children}</Layout>
       </body>
     </html>

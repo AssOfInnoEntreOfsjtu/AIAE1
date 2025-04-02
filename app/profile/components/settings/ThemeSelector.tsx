@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 interface ThemeSelectorProps {
   value: 'light' | 'dark' | 'system';
   onChange: (value: 'light' | 'dark' | 'system') => void;
@@ -19,8 +21,8 @@ export default function ThemeSelector({ value, onChange }: ThemeSelectorProps) {
           key={theme.id}
           onClick={() => onChange(theme.id)}
           className={`flex flex-col items-center p-4 rounded-lg border-2 transition-colors ${value === theme.id
-              ? 'border-blue-500 bg-blue-50'
-              : 'border-gray-200 hover:border-gray-300'
+            ? 'border-blue-500 bg-blue-50'
+            : 'border-gray-200 hover:border-gray-300'
             }`}
         >
           <span className="text-2xl mb-2">{theme.icon}</span>

@@ -189,7 +189,7 @@ export default function ProfilePage() {
           {/* 用户信息卡片 */}
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
             <div className="flex items-center gap-6">
-              <UserAvatar user={user} size="xl" />
+              <UserAvatar user={user} size="lg" />
               <div className="flex-1">
                 <div className="flex items-center gap-4 mb-2">
                   <h1 className="text-2xl font-bold text-gray-900">{user.name}</h1>

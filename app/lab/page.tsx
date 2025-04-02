@@ -1,11 +1,44 @@
 'use client';
 
-import React, { useState } from 'react';
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+
+import React, { useState, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import LabCard from './components/LabCard';
-import LabDetailModal from './components/LabDetailModal';
-import ProjectDetailModal from './components/projects/ProjectDetailModal';
-import ProjectCard from './components/projects/ProjectCard';
+import dynamic from 'next/dynamic';
+
+// 动态导入组件
+const LabCard = dynamic(() => import('./components/labs/LabCard'), {
+  loading: () => (
+    <div className="bg-slate-800/40 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-slate-700/30">
+      <div className="animate-pulse space-y-4">
+        <div className="h-16 bg-slate-700/50 rounded-xl"></div>
+        <div className="space-y-2">
+          <div className="h-4 bg-slate-700/50 rounded w-3/4"></div>
+          <div className="h-4 bg-slate-700/50 rounded w-1/2"></div>
+        </div>
+      </div>
+    </div>
+  ),
+  ssr: false
+});
+
+const LabDetailModal = dynamic(() => import('./components/LabDetailModal'), { ssr: false });
+const ProjectDetailModal = dynamic(() => import('./components/projects/ProjectDetailModal'), { ssr: false });
+const ProjectCard = dynamic(() => import('./components/projects/ProjectCard'), {
+  loading: () => (
+    <div className="bg-slate-800/40 backdrop-blur-xl rounded-3xl shadow-xl p-6 border border-slate-700/30">
+      <div className="animate-pulse space-y-4">
+        <div className="h-48 bg-slate-700/50 rounded-xl"></div>
+        <div className="space-y-2">
+          <div className="h-4 bg-slate-700/50 rounded w-3/4"></div>
+          <div className="h-4 bg-slate-700/50 rounded w-1/2"></div>
+        </div>
+      </div>
+    </div>
+  ),
+  ssr: false
+});
 
 interface Lab {
   id: string;
@@ -366,11 +399,20 @@ export default function LabListPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    onClick={() => handleLabClick(lab)}
                     className="cursor-pointer group"
                   >
                     <div className="bg-slate-800/40 backdrop-blur-xl rounded-3xl shadow-xl overflow-hidden border border-slate-700/30 hover:border-blue-500/50 transition-all duration-300">
-                      <LabCard {...lab} />
+                      <Suspense fallback={
+                        <div className="animate-pulse space-y-4 p-6">
+                          <div className="h-16 bg-slate-700/50 rounded-xl"></div>
+                          <div className="space-y-2">
+                            <div className="h-4 bg-slate-700/50 rounded w-3/4"></div>
+                            <div className="h-4 bg-slate-700/50 rounded w-1/2"></div>
+                          </div>
+                        </div>
+                      }>
+                        <LabCard {...lab} onClick={() => handleLabClick(lab)} />
+                      </Suspense>
                     </div>
                   </motion.div>
                 ))}

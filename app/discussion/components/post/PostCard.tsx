@@ -15,6 +15,7 @@ interface PostCardProps {
   onFollow: (postId: number) => void;
   onBookmark: (postId: number) => void;
   onReport: (postId: number) => void;
+  onEdit?: () => void;
 }
 
 export default function PostCard({
@@ -26,7 +27,8 @@ export default function PostCard({
   onShare,
   onFollow,
   onBookmark,
-  onReport
+  onReport,
+  onEdit
 }: PostCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 

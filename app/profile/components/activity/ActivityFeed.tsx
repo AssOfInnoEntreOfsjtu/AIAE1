@@ -50,21 +50,24 @@ export default function ActivityFeed({ userId }: ActivityFeedProps) {
     }
   }, [lastMessage]);
 
-  const handleMarkAsRead = async (activityId: string) => {
+  const handleMarkAsRead = async (id: string) => {
     try {
-      const response = await fetch(`/api/activities/${activityId}/read`, {
+      const response = await fetch(`/api/activities/${id}/read`, {
         method: 'PUT',
       });
+
       if (!response.ok) {
-        throw new Error('标记已读失败');
+        throw new Error('Failed to mark activity as read');
       }
-      setActivities((prev) =>
-        prev.map((activity) =>
-          activity.id === activityId ? { ...activity, read: true } : activity
+
+      // 更新本地状态
+      setActivities(prev =>
+        prev.map(activity =>
+          activity.id === id ? { ...activity, read: true } : activity
         )
       );
-    } catch (err) {
-      console.error('标记已读失败:', err);
+    } catch (error) {
+      console.error('Error marking activity as read:', error);
     }
   };
 

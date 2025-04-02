@@ -4,9 +4,10 @@ import LabCard from './LabCard';
 
 interface LabListProps {
   labs: Lab[];
+  onJoin: (labId: string) => void;
 }
 
-export default function LabList({ labs }: LabListProps) {
+export default function LabList({ labs, onJoin }: LabListProps) {
   return (
     <motion.div
       key="labs"
@@ -22,7 +23,7 @@ export default function LabList({ labs }: LabListProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
         >
-          <LabCard {...lab} />
+          <LabCard {...lab} onClick={() => onJoin(lab.id)} />
         </motion.div>
       ))}
     </motion.div>

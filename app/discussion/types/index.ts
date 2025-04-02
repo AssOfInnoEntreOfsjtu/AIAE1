@@ -20,6 +20,17 @@ export interface Category {
   followers: number;
 }
 
+export interface Lab {
+  id: number;
+  name: string;
+  icon: string;
+  description: string;
+  memberCount: number;
+  projectCount: number;
+  publicationCount: number;
+  members: User[];
+}
+
 export interface Post {
   id: number;
   title: string;

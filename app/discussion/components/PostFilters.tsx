@@ -1,11 +1,11 @@
 'use client';
 
-import { Category, PostFilters } from '../types';
+import { Category, PostFilters as PostFiltersType } from '../types';
 
 interface PostFiltersProps {
   categories: Category[];
-  filters: PostFilters;
-  onFilterChange: (filters: PostFilters) => void;
+  filters: PostFiltersType;
+  onFilterChange: (filters: PostFiltersType) => void;
 }
 
 export default function PostFilters({ categories, filters, onFilterChange }: PostFiltersProps) {
@@ -16,14 +16,14 @@ export default function PostFilters({ categories, filters, onFilterChange }: Pos
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onFilterChange({
       ...filters,
-      category: e.target.value ? Number(e.target.value) : undefined
+      categoryId: e.target.value ? Number(e.target.value) : undefined
     });
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onFilterChange({
       ...filters,
-      sortBy: e.target.value as PostFilters['sortBy']
+      sortBy: e.target.value as PostFiltersType['sortBy']
     });
   };
 
@@ -47,7 +47,7 @@ export default function PostFilters({ categories, filters, onFilterChange }: Pos
         {/* 分类选择 */}
         <div>
           <select
-            value={filters.category || ''}
+            value={filters.categoryId || ''}
             onChange={handleCategoryChange}
             className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all appearance-none bg-white"
           >

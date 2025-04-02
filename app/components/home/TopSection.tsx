@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface SlideContent {
   title: string;
@@ -83,7 +84,7 @@ export default function TopSection() {
     setCurrentSlide(index);
     setTimeout(() => {
       setIsTransitioning(false);
-    }, 1000); // 与 transition duration 匹配
+    }, 1000);
   };
 
   // 修改进度条动画逻辑
@@ -184,39 +185,49 @@ export default function TopSection() {
   };
 
   return (
-    <section className="h-[85vh] relative overflow-hidden bg-white">
+    <section className="h-[85vh] relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* 边界框 */}
-      <div className="absolute inset-4 border border-gray-200 rounded-2xl overflow-hidden">
+      <div className="absolute inset-4 border border-gray-700/30 rounded-2xl overflow-hidden backdrop-blur-sm">
         {/* 进度条 */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gray-100">
-          <div
-            className="h-full bg-blue-500 transition-all duration-300 ease-linear"
-            style={{ width: `${progress}%` }}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gray-700/30">
+          <motion.div
+            className="h-full bg-gradient-to-r from-blue-500 to-blue-400"
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.1, ease: "linear" }}
           />
         </div>
 
         {/* 背景效果 */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50" />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/50 via-gray-800/50 to-gray-900/50" />
           <div className="absolute inset-0 backdrop-blur-[2px]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(56,189,248,0.05),transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
           </div>
         </div>
 
         {/* 主要内容区域 */}
         <div className="relative h-full">
           {/* 大图区域 */}
-          <div className="absolute inset-0">
-            <div
-              className={`absolute inset-0 bg-cover bg-center transition-all duration-1000
-                ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}
-              style={{
-                backgroundImage: `url(${slides[currentSlide].image})`,
-                transform: isExpanding ? 'scale(1.1)' : 'scale(1)',
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/50 to-transparent" />
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                  backgroundImage: `url(${slides[currentSlide].image})`,
+                  transform: isExpanding ? 'scale(1.1)' : 'scale(1)',
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent" />
+            </motion.div>
+          </AnimatePresence>
 
           {/* 缩略图区域 */}
           <div className="absolute bottom-8 right-8 w-1/4">
@@ -226,99 +237,118 @@ export default function TopSection() {
                 className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
               >
                 {slides.map((slide, index) => (
-                  <div
+                  <motion.div
                     key={index}
                     onClick={() => handleThumbnailClick(index)}
                     className={`relative group cursor-pointer transition-all duration-700
                       ${currentSlide === index
                         ? 'scale-100 z-20'
                         : 'scale-95 hover:scale-100 z-10'}`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    <div className={`relative w-40 h-80 rounded-2xl overflow-hidden shadow-lg border border-white/20
+                    <div className={`relative w-40 h-80 rounded-2xl overflow-hidden shadow-2xl border border-white/10
                       ${currentSlide === index
-                        ? 'ring-2 ring-blue-500 ring-offset-2 ring-offset-white'
+                        ? 'ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-900'
                         : 'opacity-70 group-hover:opacity-100'}`}
                     >
                       <div
                         className="absolute inset-0 bg-cover bg-center transform transition-transform duration-700 group-hover:scale-110"
                         style={{ backgroundImage: `url(${slide.image})` }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent" />
                       <div className="absolute inset-0 flex flex-col justify-end p-4">
                         <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium mb-2
                           ${slide.tag === '活动'
-                            ? 'bg-blue-100 text-blue-600'
-                            : 'bg-green-100 text-green-600'}`}>
+                            ? 'bg-blue-500/20 text-blue-300'
+                            : 'bg-green-500/20 text-green-300'}`}>
                           {slide.tag}
                         </span>
                         <h3 className="text-white text-sm font-medium mb-2">
                           {slide.title}
                         </h3>
-                        <p className="text-white/80 text-xs mb-2">
+                        <p className="text-gray-300 text-xs mb-2">
                           {slide.description}
                         </p>
                         <div className="flex gap-2 mt-2">
-                          <button className="px-3 py-1 bg-white/90 text-gray-900 rounded-full text-xs font-medium hover:bg-white transition-all">
+                          <button className="px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-medium hover:bg-blue-600 transition-all">
                             立即报名
                           </button>
-                          <button className="px-3 py-1 border border-white/30 text-white text-xs font-medium hover:bg-white/10 transition-all">
+                          <button className="px-3 py-1 border border-white/20 text-white text-xs font-medium hover:bg-white/10 transition-all">
                             了解详情
                           </button>
                         </div>
-                        <p className="text-white/60 text-xs mt-2">
+                        <p className="text-gray-400 text-xs mt-2">
                           {slide.date}
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
               {/* 滚动按钮 */}
-              <button
+              <motion.button
                 onClick={() => scrollThumbnails('prev')}
                 className="absolute -left-8 top-1/2 -translate-y-1/2 p-1.5 rounded-full
-                  bg-white/80 hover:bg-white shadow-lg backdrop-blur-sm transition-all"
+                  bg-gray-800/80 hover:bg-gray-700/80 text-white shadow-lg backdrop-blur-sm transition-all"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-              </button>
-              <button
+              </motion.button>
+              <motion.button
                 onClick={() => scrollThumbnails('next')}
                 className="absolute -right-8 top-1/2 -translate-y-1/2 p-1.5 rounded-full
-                  bg-white/80 hover:bg-white shadow-lg backdrop-blur-sm transition-all"
+                  bg-gray-800/80 hover:bg-gray-700/80 text-white shadow-lg backdrop-blur-sm transition-all"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-              </button>
+              </motion.button>
             </div>
           </div>
 
           {/* 内容展示 */}
-          <div className="absolute left-8 bottom-8 max-w-2xl">
+          <motion.div
+            className="absolute left-8 bottom-8 max-w-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
             <span className={`inline-block px-4 py-1.5 rounded-full text-sm font-medium mb-4
               ${slides[currentSlide].tag === '活动'
-                ? 'bg-blue-100 text-blue-600'
-                : 'bg-green-100 text-green-600'}`}>
+                ? 'bg-blue-500/20 text-blue-300'
+                : 'bg-green-500/20 text-green-300'}`}>
               {slides[currentSlide].tag}
             </span>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 leading-tight">
+            <h2 className="text-4xl font-bold text-white mb-4 leading-tight">
               {slides[currentSlide].title}
             </h2>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-gray-300 mb-6">
               {slides[currentSlide].description}
             </p>
             <div className="flex gap-4">
-              <button className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium transition-all">
+              <motion.button
+                className="px-6 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-full font-medium transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 立即报名
-              </button>
-              <button className="px-6 py-2.5 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full font-medium transition-all">
+              </motion.button>
+              <motion.button
+                className="px-6 py-2.5 border border-white/20 text-white hover:bg-white/10 rounded-full font-medium transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 了解详情
-              </button>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

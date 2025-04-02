@@ -23,7 +23,7 @@ export default function PostFilters({
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onFilterChange({
       ...filters,
-      category: e.target.value ? Number(e.target.value) : undefined
+      categoryId: e.target.value ? Number(e.target.value) : undefined
     });
   };
 
@@ -47,7 +47,7 @@ export default function PostFilters({
       </div>
       <div className="flex gap-4">
         <select
-          value={filters.category || ''}
+          value={filters.categoryId || ''}
           onChange={handleCategoryChange}
           className="px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >

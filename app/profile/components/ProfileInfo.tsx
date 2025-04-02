@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import type { JSX } from 'react';
 import { User } from '@/types/user';
 import EditProfileModal from './EditProfileModal';
 import Image from 'next/image';

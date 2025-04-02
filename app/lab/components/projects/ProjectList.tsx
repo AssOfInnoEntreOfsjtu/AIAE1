@@ -1,9 +1,21 @@
 import { motion } from 'framer-motion';
-import { Project } from '../../types';
 import ProjectCard from './ProjectCard';
 
 interface ProjectListProps {
-  projects: Project[];
+  projects: {
+    id: string;
+    title: string;
+    description: string;
+    coverImage: string;
+    lab: string;
+    department: string;
+    status: string;
+    startDate: string;
+    endDate: string;
+    progress: number;
+    team: string[];
+    tags: string[];
+  }[];
 }
 
 export default function ProjectList({ projects }: ProjectListProps) {
@@ -14,10 +26,9 @@ export default function ProjectList({ projects }: ProjectListProps) {
           key={project.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
         >
-          <ProjectCard project={project} />
+          <ProjectCard {...project} />
         </motion.div>
       ))}
     </div>
